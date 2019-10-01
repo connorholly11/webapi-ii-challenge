@@ -23,7 +23,13 @@ router.post("/:id/comments", (req, res) => {
 
   db.insertComment(newComment)
     .then(comment => {
-      res.status(201).json(comment);
+      if (comment) {
+        res.status(201).json(comment);
+      } else {
+        res.status(404).json({
+          message: "This ID is invalid"
+        });
+      }
     })
     .catch(error => {
       res.status(500).json({
@@ -53,7 +59,13 @@ router.get("/:id", (req, res) => {
 
   db.findById(id)
     .then(post => {
-      res.status(200).json(post);
+      if (post) {
+        res.status(200).json(post);
+      } else {
+        res.status(404).json({
+          message: "404 error, ID not found"
+        });
+      }
     })
     .catch(error => {
       res.status(500).json({
@@ -69,7 +81,13 @@ router.get("/:id/comments", (req, res) => {
 
   db.findCommentById(id)
     .then(comment => {
-      res.status(200).json(comment);
+      if (comment) {
+        res.status(200).json(comment);
+      } else {
+        res.status(404).json({
+          message: "This ID is invalid"
+        });
+      }
     })
     .catch(error => {
       res.status(500).json({
